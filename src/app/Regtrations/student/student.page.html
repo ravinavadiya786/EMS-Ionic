@@ -1,0 +1,195 @@
+<ion-header style="--ion-background-color: white;">
+  <ion-toolbar>
+    <ion-title>Student Regtrations</ion-title>
+    <ion-buttons  *ngIf="!Data_Service.showcamera" slot="start">
+      <ion-back-button color="danger"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        *ngIf="Data_Service.showcamera"
+        (click)="Data_Service.closeCamera()"
+      >
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      
+    </ion-buttons>
+    <ion-buttons slot="start"> 
+      <ion-button
+        *ngIf="Data_Service.showcamera"
+        (click)="Data_Service.closeCamera()"
+      >
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="bgcolor">
+    <ion-icon
+      *ngIf="Data_Service.showcamera"
+      class="frame"
+      name="qr-scanner"
+    ></ion-icon>
+    <div *ngIf="!Data_Service.showcamera">
+      <div fxLayout style="height: 100%">
+      <mat-vertical-stepper labelPosition="bottom"  fxLayout="column" fxFlex="100" fxLayoutAlign="stretch" [linear]="true" #stepper>
+
+        <mat-step [completed]="satuts[0]">
+          <ng-template matStepLabel>Scan Addhar_Card..</ng-template>
+
+          <ion-button expand="full" color="tertiary" (click)="scandata()">
+            <ion-icon slot="start" name="qr-scanner"></ion-icon>
+            Scan Qr-Code</ion-button
+          >
+
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </mat-step>
+        
+        <mat-step [completed]="satuts[1]">
+          <ng-template matStepLabel>take Photo</ng-template>
+
+          <ion-button expand="full" color="tertiary" (click)="takephoto()"
+            >Take Photo</ion-button
+          >
+
+          <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </mat-step>
+
+        <mat-step [completed]="satuts[2]" [stepControl]="form">
+          <ng-template matStepLabel>Enter The Other Details.</ng-template>
+
+          <div class="example-container">
+            <form [formGroup]="form" >  
+              <mat-form-field
+                hintLabel="Max 10 characters"
+                appearance="outline"
+              >
+                <mat-label>Enter Phone Number</mat-label>
+                <input
+                  matInput
+                  #input
+                  formControlName="PhNo"
+                  maxlength="10"
+                  type="number"
+                  placeholder="Enter Phone Number"
+                  required
+                />
+                <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                <mat-error *ngIf="form.controls['Password'].errors?.pattern"
+                  >Invalid Number</mat-error
+                >
+              </mat-form-field>
+              
+              <mat-divider></mat-divider>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Course</mat-label>
+                <mat-select formControlName="Course_id">
+                  <div *ngFor="let item of course">
+                    <mat-option value="{{item._id}}"
+                      >{{item.Course_Name}}</mat-option
+                    >
+                  </div>
+                </mat-select>
+              </mat-form-field>
+              <mat-divider></mat-divider>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Select Satndred</mat-label>
+                <mat-select formControlName="Standard_id">
+                  <div *ngFor="let item of Standard">
+                    <mat-option selected value="{{item._id}}">{{item.Name}}</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-divider></mat-divider>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Enter your email</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  placeholder="vivekanand@example.com"
+                  required
+                />
+                <mat-error *ngIf="form.controls['email'].errors?.required"
+                  >This field is mandatory.</mat-error
+                >
+              </mat-form-field>
+
+              <mat-divider></mat-divider>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Enter your password</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  required
+                  formControlName="Password"
+                />
+
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <ion-icon [name]="hide ? 'eye-off' : 'eye'"></ion-icon>
+                </button>
+                <mat-error *ngIf="form.controls['Password'].errors?.required"
+                  >This field is mandatory.</mat-error
+                >
+                <mat-error *ngIf="form.controls['Password'].errors?.minlength"
+                  >Minimum 6 charactors needed.</mat-error
+                >
+                <mat-error *ngIf="form.controls['Password'].errors?.maxLength"
+                  >Maxmum 8 charactors needed.</mat-error
+                >
+              </mat-form-field>
+              <ion-icon name="eye-off-outline"></ion-icon>
+
+              <mat-divider></mat-divider>
+              <button mat-button matStepperPrevious>Back</button>
+
+              <button mat-raised-button color="primary" [disabled]="!this.form.valid"  (click)="onSubmit()" type="button" matStepperNext>
+                Next
+              </button>
+            </form>
+          </div>
+        </mat-step>
+
+        <mat-step [completed]="satuts[3]">
+          <ng-template matStepLabel>Check deatils And Submit</ng-template>
+
+    
+          <div *ngIf="Data">
+            <ion-avatar>
+              <img [src]="Data.imgurl">
+            </ion-avatar>
+            <mat-list *ngFor="let data of Data | keyvalue">
+              <mat-list-item *ngIf="['Standard_id','Course_id','address','imgurl'].indexOf(data.key) == -1 ">
+                <ion-label color="dark"> {{ data.key }}</ion-label>
+                <pre> : </pre>
+                <ion-label color="dark"> {{ data.value }}</ion-label>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-list>
+            <ion-button expand="full"  [disabled]="!this.form.valid" color="tertiary" (click)="postdata()"
+            >Submit Data</ion-button
+          >
+          </div>
+          <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+        </mat-step>
+      </mat-vertical-stepper>
+      </div>
+     
+    </div>
+  </div>
+
+  
+</ion-content>
