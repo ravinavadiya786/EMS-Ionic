@@ -54,7 +54,7 @@ export class DataService {
           scanSub.unsubscribe();
           window.document.querySelector('ion-app').classList.remove('cameraView');
 
-          this.dialogs.alert("Successfully Scanned Data.... Go to next ");
+          this.dialogs.alert("Successfully Scanned Data.... Now Go to next ");
 
         }, (err) => {
           this.dialogs.alert(JSON.stringify(err))
@@ -95,14 +95,6 @@ export class DataService {
     const loading = await this.loadingController.create();
     await this.camera.getPicture(options).then(async (imageData) => {
       const image = 'data:image/jpeg;base64,' + imageData;
-
-      try {
-
-      } catch (error) {
-
-      }
-
-
       const fireimagepath = "Student_Photos/" + this.Data.name + '.jpg';
       await loading.present()
 

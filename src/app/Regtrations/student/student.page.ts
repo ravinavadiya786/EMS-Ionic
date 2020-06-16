@@ -33,8 +33,8 @@ export class StudentPage implements OnInit {
       Validators.required,
       Validators.pattern(/^\+?\d{10}$/)
     ]),
-    Course_id: new FormControl(null),
-    Standard_id: new FormControl(null)
+    Course_id: new FormControl("", [Validators.required]),
+    Standard_id: new FormControl("", [Validators.required])
   });
 
   constructor(public Data_Service: DataService,
