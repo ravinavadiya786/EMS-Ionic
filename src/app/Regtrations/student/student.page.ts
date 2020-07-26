@@ -56,7 +56,7 @@ export class StudentPage implements OnInit {
 
     this.http
       .get(
-        "https://college-managment-system.herokuapp.com/Admin/course", {}, { "Content-Type": "application/json" }
+        "https://cooing-famous-iguanacolossus.glitch.me/Admin/course", {}, { "Content-Type": "application/json" }
       )
       .then(data => {
 
@@ -68,7 +68,7 @@ export class StudentPage implements OnInit {
 
     this.http
       .get(
-        "https://college-managment-system.herokuapp.com/Admin/Standard",
+        "https://cooing-famous-iguanacolossus.glitch.me/Admin/Standard",
         {},
         {
           "Content-Type": "application/json"
