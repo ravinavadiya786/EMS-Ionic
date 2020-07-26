@@ -17,7 +17,7 @@ export class StudentPage implements OnInit {
   hide = true;
   satuts = [false, false, false, false];
   @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
-  readonly Url = 'https://college-managment-system.herokuapp.com/Auth/Student';
+  readonly Url = 'https://cooing-famous-iguanacolossus.glitch.me/Auth/Student';
   Data: { [k: string]: any } = {};
   imageurl = '';
   downloadurl: any;
